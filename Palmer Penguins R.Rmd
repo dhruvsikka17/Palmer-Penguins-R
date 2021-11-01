@@ -1,0 +1,33 @@
+---
+title: "Palmer Penguins Data Analysis"
+author: Dhruv Sikka
+date: October 1, 2021
+output: ioslides_presentation
+---
+
+## Installing Libraries and Basic cleaning
+```{r echo=TRUE, error=FALSE, message=FALSE, warning=FALSE, results='hide'}
+library(tidyverse)
+library(palmerpenguins)
+library(ggplot2)
+
+penguins$body_mass_g = (penguins$body_mass_g/1000)
+penguins$flipper_length_mm = (penguins$flipper_length_mm/1000)
+
+penguins<- penguins %>% drop_na(sex)
+```
+
+## Flipper Length and Body Mass Coloured by species
+```{r Species, echo=FALSE, message=FALSE, warning=FALSE}
+ggplot(data=penguins, aes(x= flipper_length_mm, y= body_mass_g, color = species )) + geom_point() + facet_wrap(~species) +labs(x="Flipper Length (Meter)",y="Body Mass(Kilograms)")
+```
+
+## Linear Regression Of Flipper Length and Body Mass
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+ggplot(data=penguins, aes(x= flipper_length_mm, y= body_mass_g)) + geom_smooth(method = "lm") + geom_point() + labs(x="Flipper Length (Meter)",y="Body Mass(Kilograms)")
+```
+
+## Flipper Length and Body Mass Coloured by species and gender
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+ggplot(data=penguins, aes(x= flipper_length_mm, y= body_mass_g, color = species )) + geom_point() + facet_grid(sex~species) +labs(x="Flipper Length (Meter)",y="Body Mass(Kilograms)")
+```
